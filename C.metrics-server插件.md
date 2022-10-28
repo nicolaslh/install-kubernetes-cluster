@@ -100,9 +100,9 @@ kubectl top 命令从 metrics-server 获取集群节点基本的指标信息：
 
 ``` bash
 NAME              CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%   
-zhangjun-k8s-01   177m         2%     9267Mi          58%       
-zhangjun-k8s-02   364m         4%     10338Mi         65%       
-zhangjun-k8s-03   185m         2%     5950Mi          37%   
+nic-k8s-01   177m         2%     9267Mi          58%       
+nic-k8s-02   364m         4%     10338Mi         65%       
+nic-k8s-03   185m         2%     5950Mi          37%   
 ```
 
 ## 参考

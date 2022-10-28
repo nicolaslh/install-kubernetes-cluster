@@ -25,7 +25,7 @@ flanneld 第一次启动时，从 etcd 获取配置的 Pod 网段信息，为本
 flannel 将分配给自己的 Pod 网段信息写入 `/run/flannel/docker` 文件，docker 后续使用这个文件中的环境变量设置 `docker0` 网桥，从而从这个地址段为本节点的所有 Pod 容器分配 IP。
 
 注意：
-1. 如果没有特殊指明，本文档的所有操作**均在 zhangjun-k8s01 节点上执行**，然后远程分发文件和执行命令；
+1. 如果没有特殊指明，本文档的所有操作**均在 nic-k8s01 节点上执行**，然后远程分发文件和执行命令；
 2. flanneld 与本文档部署的 etcd v3.4.x 不兼容，需要将 etcd 降级到 v3.3.x；
 3. flanneld 与 docker 结合使用；
     
@@ -259,13 +259,13 @@ etcdctl \
 
 `{"PublicIP":"172.27.137.240","BackendType":"vxlan","BackendData":{"VtepMAC":"ce:9c:a9:08:50:03"}}`
 
-+ 172.30.80.0/21 被分配给节点 zhangjun-k8s01（172.27.137.240）；
-+ VtepMAC 为 zhangjun-k8s01 节点的 flannel.1 网卡 MAC 地址；
++ 172.30.80.0/21 被分配给节点 nic-k8s01（172.27.137.240）；
++ VtepMAC 为 nic-k8s01 节点的 flannel.1 网卡 MAC 地址；
 
 ## 检查节点 flannel 网络信息
 
 ``` bash
-[root@zhangjun-k8s01 work]# ip addr show
+[root@nic-k8s01 work]# ip addr show
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
@@ -282,7 +282,7 @@ etcdctl \
 + flannel.1 网卡的地址为分配的 Pod 子网段的第一个 IP（.0），且是 /32 的地址；
 
 ``` bash
-[root@zhangjun-k8s01 work]# ip route show |grep flannel.1
+[root@nic-k8s01 work]# ip route show |grep flannel.1
 172.30.32.0/24 via 172.30.32.0 dev flannel.1 onlink
 172.30.184.0/24 via 172.30.184.0 dev flannel.1 onlink
 ```
